@@ -1,5 +1,8 @@
 <template>
-  <div>Foo</div>
+  <div>
+    <div>Foo</div>
+    <p>hot update is ok</p>
+  </div>
 </template>
 
 <script>

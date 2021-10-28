@@ -16,14 +16,14 @@ export default {
       val: 22
     }
   },
-  beforeCreate () {
+  // beforeCreate () { // 将数据进行响应式的过程在服务器上是多余的，所以默认情况下禁用。
+  //   console.log('1111')
+  //   this.val = 12
+  // },
+  mounted () {
     console.log('1111')
     this.val = 12
   }
-  // mounted () {
-  //   console.log('1111')
-  //   this.url = this.$route.path
-  // }
 }
 </script>
 
