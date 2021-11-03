@@ -3,9 +3,10 @@ const webpack = require("webpack");
 const base = require("./webpack.base.config");
 const { merge } = require("webpack-merge");
 const nodeExternals = require("webpack-node-externals");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const VueSSRServerPlugin = require("vue-server-renderer/server-plugin");
 
-const isProd = process.env.NODE_ENV === 'production'
+const isProd = process.env.NODE_ENV === "production";
 
 module.exports = merge(base, {
   entry: path.resolve(__dirname, "../src/entry-server.js"),
@@ -30,7 +31,14 @@ module.exports = merge(base, {
       {
         test: /\.((c|sa|sc)ss)$/i,
         use: [
-          "vue-style-loader",  // 注意这里要使用 vue-style-loader，因为它对ssr做了兼容处理
+          isProd
+            ? {
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                  emit: false,
+                },
+              }
+            : "vue-style-loader", // 注意这里要使用 vue-style-loader，因为它对ssr做了兼容处理
           {
             loader: "css-loader",
             options: {
@@ -51,6 +59,13 @@ module.exports = merge(base, {
       "process.env.VUE_ENV": '"server"',
     }),
     new VueSSRServerPlugin(),
-  ]
-  
+  ].concat(
+    isProd
+      ? [
+          new MiniCssExtractPlugin({
+            filename: "css/[name].[fullhash:8].css",
+          }),
+        ]
+      : []
+  ),
 });
