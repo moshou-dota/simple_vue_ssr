@@ -7,7 +7,7 @@ export default (context) => {
     router.onReady(() => {
       const matchComponents = router.getMatchedComponents();
       if (!matchComponents.length) {
-        return reject({ code: 404 });
+        return reject({ code: 404, url: context.url });
       }
       const matchAsyncData = matchComponents.filter(component => component.asyncData).map(component => {
         if (component.asyncData) {

@@ -6,11 +6,17 @@
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
 <style>
+p {
+  color: red;
+}
+</style>
 
+<style lang="sass" scoped>
+div {
+  height: 200px;
+}
 </style>

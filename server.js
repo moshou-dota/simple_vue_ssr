@@ -2,6 +2,7 @@ const path = require("path");
 const resolve = (file) => path.resolve(__dirname, file);
 const express = require("express");
 const server = express();
+const favicon = require('serve-favicon')
 const { createBundleRenderer } = require("vue-server-renderer");
 const isProd = process.env.NODE_ENV === "production";
 const templatePath = path.resolve("./index.template.html");
@@ -38,7 +39,14 @@ if (isProd) {
   );
 }
 
-server.use(express.static(resolve("./dist")));
+const serve = (path, cache) => express.static(resolve(path), {
+  maxAge: cache && isProd ? 1000 * 60 * 60 * 24 * 30 : 0
+})
+
+server.use(favicon(__dirname + '/public/logo-48.png'))
+server.use('/dist', serve('./dist', true))
+server.use('/public', serve('./public', true))
+// server.use(express.static(resolve("./dist")));
 
 function render (req, res) {
   const context = { url: req.url, title: "vue ssr demo" };
