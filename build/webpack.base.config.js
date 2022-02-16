@@ -19,7 +19,7 @@ module.exports = {
     }
   },
   module: {
-    // noParse: /es6-promise\.js$/, // 通过不解析某些库来提高性能
+    noParse: /es6-promise\.js$/, // 通过不解析某些库来提高性能
     rules: [
       {
         test: /\.vue$/,
@@ -41,8 +41,8 @@ module.exports = {
         }
       },
       {
-        test: /\.(png|gif|jpg|jpeg)$/,
-        type: 'asset',
+        test: /\.(png|gif|jpg|jpeg|gif|svg)$/,
+        type: 'asset', // More information here https://webpack.js.org/guides/asset-modules/
         parser: {
           dataUrlCondition: {
             maxSize: 4 * 1024 // 4kb
@@ -52,11 +52,13 @@ module.exports = {
           filename: 'images/[hash][ext][query]'
         }
       },
-      // {
-      //   test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
-      //   // More information here https://webpack.js.org/guides/asset-modules/
-      //   type: "asset",
-      // },
+      {
+        test: /\.(eot|ttf|woff|woff2)$/i,
+        type: "asset",
+        generator: {
+          filename: 'fonts/[hash][ext][query]'
+        }
+      },
     ]
   },
   plugins: [

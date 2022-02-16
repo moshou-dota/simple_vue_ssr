@@ -22,13 +22,13 @@ module.exports = merge(base, {
           {
             loader: "css-loader",
             options: {
-              // importLoaders: 2, // importLoaders 选项允许你配置在 css-loader 之前有多少 loader 应用于 @imported 资源与 CSS 模块/ICSS 导入。
+              importLoaders: 2, // importLoaders 选项允许你配置在 css-loader 之前有多少 loader 应用于 @imported 资源与 CSS 模块/ICSS 导入。
               // 0 => no loaders (default);
               // 1 => postcss-loader;
               // 2 => postcss-loader, sass-loader
             },
           },
-          // "postcss-loader",
+          "postcss-loader",
           "sass-loader",
         ],
       },
@@ -45,10 +45,10 @@ module.exports = merge(base, {
   ].concat(
     isProd
       ? [
-          new MiniCssExtractPlugin({
-            filename: "css/[name].[fullhash:8].css",
-          }),
-        ]
+        new MiniCssExtractPlugin({
+          filename: "css/[name].[fullhash:8].css",
+        }),
+      ]
       : []
   ),
 });

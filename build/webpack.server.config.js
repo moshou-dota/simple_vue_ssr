@@ -31,21 +31,14 @@ module.exports = merge(base, {
       {
         test: /\.((c|sa|sc)ss)$/i,
         use: [
-          isProd
-            ? {
-                loader: MiniCssExtractPlugin.loader,
-                options: {
-                  emit: false,
-                },
-              }
-            : "vue-style-loader", // 注意这里要使用 vue-style-loader，因为它对ssr做了兼容处理
+          "vue-style-loader", // 注意这里要使用 vue-style-loader，因为它对ssr做了兼容处理
           {
             loader: "css-loader",
             options: {
-              // importLoaders: 2,
+              importLoaders: 2,
             },
           },
-          // "postcss-loader",
+          "postcss-loader",
           "sass-loader",
         ],
       },

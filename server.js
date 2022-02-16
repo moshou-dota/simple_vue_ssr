@@ -1,9 +1,9 @@
 const path = require("path");
-const resolve = (file) => path.resolve(__dirname, file);
 const express = require("express");
-const server = express();
 const favicon = require('serve-favicon')
 const { createBundleRenderer } = require("vue-server-renderer");
+const server = express();
+const resolve = (file) => path.resolve(__dirname, file);
 const isProd = process.env.NODE_ENV === "production";
 const templatePath = path.resolve("./index.template.html");
 
@@ -22,10 +22,14 @@ function createRenderer(bundle, options) {
 
 if (isProd) {
   const serverBundle = require("./dist/vue-ssr-server-bundle.json");
+  /**
+   * vue-ssr-client-manifest.json的作用：
+   * 服务端在渲染页面时，根据这个清单来渲染HTML中的script标签（JavaScript）和link标签（CSS）。
+  */
   const clientManifest = require("./dist/vue-ssr-client-manifest.json");
 
   const template = require("fs").readFileSync(templatePath, "utf-8");
-  renderer = createBundleRenderer(serverBundle, {
+  renderer = createRenderer(serverBundle, {
     template,
     clientManifest,
   });
